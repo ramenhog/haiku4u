@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <!--  Meta  -->
+  <meta charset="UTF-8" />
+  <title>Haiku4U</title>
+  
+  <!--  Styles  -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+  <link rel="stylesheet" href="styles/index.processed.css">
+</head>
+<body>
+  <div class="main-container" id="main-container">
+    <nav class="nav">
+      <div class="nav__container">
+        <a href="/" class="nav__logo">haiku4u</a>
+        <button id="open-modal" class="nav__item">About</button>
+      </div>
+    </nav>
+    <section class="section">
+      <div class="screen screen--slide-right screen--active screen--initial" id="landing">
+        <div class="landing__heading">
+          <h1>haiku4u</h1>
+          <h3>a lorem ipsum haiku generator</h3>
+        </div>
+        <form class="form" autocomplete="off" id="form">
+          <div class="field" id="field">
+            <input type="text" class="field__input" id="input" placeholder="What is your haiku about?" />
+            <button type="submit" class="field__submit" id="button"><span class="ion-arrow-right-c"></span></button>
+          </div>
+          <p class="field__info">* Must be one word</p>
+        </form>
+      </div>
+
+      <div class="screen screen--slide-left" id="output">
+        <div class="haiku__container">
+          <h2 id="haiku-title" class="haiku__title"></h2>
+          <div class="haiku__content" id="haiku"></div>
+          <div class="haiku__actions">
+            <button class="icon icon--spin ion-android-refresh" id="refresh"></button>
+            <button class="social icon ion-share">
+              <a class="social__bubble ion-social-twitter"></a>
+              <a class="social__bubble ion-social-facebook"></a>
+              <a class="social__bubble ion-social-googleplus"></a>
+            </button>
+          </div>
+        </div>
+        <button class="back-button" id="back"><span class="icon ion-arrow-left-c"></span> Back</button>
+      </div>
+    </section>
+  </div>
+  <div class="modal" id="modal">
+    <div class="modal__container">
+      <h2 class="modal__heading">the project.</h2>
+      <p>Something something</p>
+      <h2 class="modal__heading">the creator.</h2>
+      <p>me!</p>
+    </div>
+    <button class="modal__close" id="close-modal">&times;</button>
+  </div>
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
+  <script src="scripts/index.processed.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+</body>
+</html>
