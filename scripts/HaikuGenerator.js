@@ -2,25 +2,33 @@ import pubSub from './pubSub';
 import {fetchWordData} from './haikuUtils';
 
 let haikuArray = [];
-  
-const input = document.getElementById('input');
+
+let word = '';
+
+pubSub.subscribe('inputChanged', (data) => {
+  word = data;
+});
+
+function random(array) {
+  return array[Math.floor(Math.random() * array.length)];
+};
 
 function getWords(allRelatedWords, syllableCount) {
   const strArray = [];
-  let prevPOS = ["adj", "noun", "verb"].random();
+  let prevPOS = random(["adj", "noun", "verb"]);
   let prevWord = "";
   
-  const adjectives = _.filter(allRelatedWords, word => {
+  const adjectives = allRelatedWords.filter(word => {
     if (!word.tags) return false;
     return word.tags.indexOf("adj") > -1;
   });
 
-  const verbs = _.filter(allRelatedWords, word => {
+  const verbs = allRelatedWords.filter(word => {
     if (!word.tags) return false;
     return word.tags.indexOf("v") > -1;
   });
 
-  const nouns = _.filter(allRelatedWords, word => {
+  const nouns = allRelatedWords.filter(word => {
     if (!word.tags) return false;
     return (
       word.tags.indexOf("n") > -1 &&
@@ -49,7 +57,7 @@ function getWords(allRelatedWords, syllableCount) {
         break;
     }
 
-    const filteredNewWords = _.filter(newWords, newWordObj => {
+    const filteredNewWords = newWords.filter(newWordObj => {
       if (syllableCount === 1) {
         return newWordObj.numSyllables === syllableCount;
       }
@@ -60,7 +68,7 @@ function getWords(allRelatedWords, syllableCount) {
       );
     });
 
-    const newWord = filteredNewWords.random();
+    const newWord = random(filteredNewWords);
 
     if (!newWord) return;
     strArray.push(newWord.word);
@@ -72,8 +80,7 @@ function getWords(allRelatedWords, syllableCount) {
 }
 
 export function generateHaiku() {
-  const word = input.value;
-
+  
   const totalWords = word.match(/\b\w+\b/g);
   if (!word.length || totalWords.length > 1) {
     pubSub.emit('validationError');

@@ -5,12 +5,12 @@ import Result from './ResultComponent';
 import Modal from './ModalComponent';
 import Field from './FieldComponent';
 import Screen from './ScreenComponent';
+import Input from './InputComponent';
 
-Array.prototype.random = function() {
-  return this[Math.floor(Math.random() * this.length)];
-};
+Input();
 
 Form(document.getElementById('form'), generateHaiku);
+
 Result();
 Modal(document.getElementById('modal'), document.getElementById('main-container'));
 Field();

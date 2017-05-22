@@ -8260,13 +8260,16 @@
 
 	var _ScreenComponent2 = _interopRequireDefault(_ScreenComponent);
 
+	var _InputComponent = __webpack_require__(308);
+
+	var _InputComponent2 = _interopRequireDefault(_InputComponent);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	Array.prototype.random = function () {
-	  return this[Math.floor(Math.random() * this.length)];
-	};
+	(0, _InputComponent2.default)();
 
 	(0, _FormComponent2.default)(document.getElementById('form'), _HaikuGenerator.generateHaiku);
+
 	(0, _ResultComponent2.default)();
 	(0, _ModalComponent2.default)(document.getElementById('modal'), document.getElementById('main-container'));
 	(0, _FieldComponent2.default)();
@@ -8335,24 +8338,32 @@
 
 	var haikuArray = [];
 
-	var input = document.getElementById('input');
+	var word = '';
+
+	_pubSub2.default.subscribe('inputChanged', function (data) {
+	  word = data;
+	});
+
+	function random(array) {
+	  return array[Math.floor(Math.random() * array.length)];
+	};
 
 	function getWords(allRelatedWords, syllableCount) {
 	  var strArray = [];
-	  var prevPOS = ["adj", "noun", "verb"].random();
+	  var prevPOS = random(["adj", "noun", "verb"]);
 	  var prevWord = "";
 
-	  var adjectives = _.filter(allRelatedWords, function (word) {
+	  var adjectives = allRelatedWords.filter(function (word) {
 	    if (!word.tags) return false;
 	    return word.tags.indexOf("adj") > -1;
 	  });
 
-	  var verbs = _.filter(allRelatedWords, function (word) {
+	  var verbs = allRelatedWords.filter(function (word) {
 	    if (!word.tags) return false;
 	    return word.tags.indexOf("v") > -1;
 	  });
 
-	  var nouns = _.filter(allRelatedWords, function (word) {
+	  var nouns = allRelatedWords.filter(function (word) {
 	    if (!word.tags) return false;
 	    return word.tags.indexOf("n") > -1 && word.word !== "my" && word.word !== "at" && word.word !== "the" && word.word !== "a";
 	  });
@@ -8375,14 +8386,14 @@
 	        break;
 	    }
 
-	    var filteredNewWords = _.filter(newWords, function (newWordObj) {
+	    var filteredNewWords = newWords.filter(function (newWordObj) {
 	      if (syllableCount === 1) {
 	        return newWordObj.numSyllables === syllableCount;
 	      }
 	      return newWordObj.numSyllables <= syllableCount && strArray.indexOf(newWordObj.word) === -1 && haikuArray.indexOf(newWordObj.word) === -1;
 	    });
 
-	    var newWord = filteredNewWords.random();
+	    var newWord = random(filteredNewWords);
 
 	    if (!newWord) return;
 	    strArray.push(newWord.word);
@@ -8394,7 +8405,6 @@
 	}
 
 	function generateHaiku() {
-	  var word = input.value;
 
 	  var totalWords = word.match(/\b\w+\b/g);
 	  if (!word.length || totalWords.length > 1) {
@@ -8625,7 +8635,7 @@
 /* 305 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -8642,14 +8652,24 @@
 	    container.classList.remove("blur");
 	  }
 
-	  (0, _ButtonComponent2.default)(document.getElementById("open-modal"), openModal);
+	  (0, _ButtonComponent2.default)(document.getElementById("open-modal"), function (e) {
+	    return _pubSub2.default.emit('openModal');
+	  });
+	  (0, _ButtonComponent2.default)(document.getElementById("close-modal"), function (e) {
+	    return _pubSub2.default.emit('closeModal');
+	  });
 
-	  (0, _ButtonComponent2.default)(document.getElementById("close-modal"), closeModal);
+	  _pubSub2.default.subscribe('openModal', openModal);
+	  _pubSub2.default.subscribe('closeModal', closeModal);
 	};
 
 	var _ButtonComponent = __webpack_require__(304);
 
 	var _ButtonComponent2 = _interopRequireDefault(_ButtonComponent);
+
+	var _pubSub = __webpack_require__(299);
+
+	var _pubSub2 = _interopRequireDefault(_pubSub);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8714,6 +8734,36 @@
 	    landingDiv.classList.remove("screen--active");
 	    landingDiv.classList.remove("screen--initial");
 	    outputDiv.classList.add("screen--active");
+	  });
+	}
+
+/***/ },
+/* 308 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = InputComponent;
+
+	var _pubSub = __webpack_require__(299);
+
+	var _pubSub2 = _interopRequireDefault(_pubSub);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function InputComponent() {
+	  var input = document.getElementById('input');
+
+	  input.addEventListener('change', function (e) {
+	    _pubSub2.default.emit('inputChanged', input.value);
+	  });
+
+	  _pubSub2.default.subscribe('clickedBack', function () {
+	    input.value = '';
+	    input.focus();
 	  });
 	}
 
