@@ -4,6 +4,7 @@ $bg: #7A60E9;
 $navBg: #755CE0;
 $lightFont: #D7DEDC;
 $darkFont: #5643af;
+$mobileWidth: 500px;
 
 %bubble {
   opacity: 0.5;
@@ -94,6 +95,11 @@ body {
   font-family: "Bitter", Helvetica, serif;
   -webkit-font-smoothing: antialiased;
   color: $lightFont;
+  font-size: 15px;
+  
+  @media (min-width: $mobileWidth) {
+    font-size: 17px;
+  }
 }
 
 .main-container {
@@ -121,12 +127,20 @@ body {
 
 h1 {
   margin: 0 0 0.2em;
-  font-size: 4rem;
+  font-size: 2.1rem;
   line-height: 1.2;
+  
+  @media (min-width: $mobileWidth) {
+    font-size: 4rem;
+  }
 }
 
 h2 {
-  font-size: 3rem;
+  font-size: 1.1rem;
+  
+  @media (min-width: $mobileWidth) {
+    font-size: 3rem;
+  }
 }
 
 h3 {
@@ -134,16 +148,27 @@ h3 {
   font-weight: 400;
 }
 
-.icon {
+.round-button {
+  @extend %bubble;
   font-size: 1.3rem;
+  
+  &--spin {
+    &.active {
+      animation: spin 0.4s cubic-bezier(0.72, -0.07, 0.59, 1.08);
+    }
+  }
 }
 
 .nav {
-  padding: 1.5rem 4vw;
+  padding: 1rem;
   border: 12px solid lighten($navBg, 5%);
   border-bottom: 0;
   background: $navBg;
   color: $lightFont;
+  
+  @media (min-width: $mobileWidth) {
+    padding: 1.5rem 4vw;
+  }
   
   &__item {
     text-transform: uppercase;
@@ -165,6 +190,22 @@ h3 {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
+    flex-direction: column;
+    
+    @media (min-width: $mobileWidth) {
+      flex-direction: row;
+    }
+  }
+  
+  &__description {
+    margin: 0.5em 0;
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+  
+  &__link {
+    border-bottom: 1px solid currentColor;
+    font-family: inherit;
   }
 }
 
@@ -253,7 +294,14 @@ h3 {
 }
 
 .form {
-  margin-bottom: 15rem;
+  margin-bottom: 12vh;
+  width: 90%;
+  max-width: 600px;
+  
+  @media (min-width: $mobileWidth) {
+    width: 40vw;
+    min-width: 460px;
+  }
 }
 
 .field {
@@ -264,8 +312,6 @@ h3 {
   display: flex;
   align-items: center;
   border: none;
-  width: 40vw;
-  max-width: 600px;
   height: var(--fieldHeight);
   background-color: rgba(white, 0.5);
   overflow: hidden;
@@ -287,9 +333,13 @@ h3 {
     background: none;
     padding: 0 1em;
     line-height: var(--fieldHeight);
-    font-size: 1.15rem;
+    font-size: 0.8rem;
     color: $darkFont;
     font-family: "Open Sans", Helvetica, serif;
+    
+    @media (min-width: $mobileWidth) {
+      font-size: 1.15rem;
+    }
     
     &::placeholder {
       color: rgba($navBg, 0.65);
@@ -309,7 +359,11 @@ h3 {
     padding: 0 1em;
     line-height: var(--fieldHeight);
     color: $navBg;
-    font-size: 2rem;
+    font-size: 1.3rem;
+    
+    @media (min-width: $mobileWidth) {
+      font-size: 2rem;
+    }
     
     &:focus,
     &:active {
@@ -330,88 +384,43 @@ h3 {
   &__title {
     margin: 0 0 0.5em 0;
     line-height: 1.1;
+    font-size: 1.5rem;
+    
+    @media (min-width: $mobileWidth) {
+      font-size: 3rem;
+    }
   }
   
   &__container {
-    min-width: 360px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     flex: 1;
-    font-size: 1.4rem;
+    font-size: 1rem;
     line-height: 1.7;
+    
+    @media (min-width: $mobileWidth) {
+      min-width: 360px;
+      font-size: 1.4rem;
+    }
   } 
   
   &__actions {
     display: flex;
     justify-content: flex-end;
     padding-top: 2rem;
-    
-    .icon--spin {
-      &.active {
-        animation: spin 0.4s cubic-bezier(0.72, -0.07, 0.59, 1.08);
-      }
-    }
-    
-    .icon {
-      @extend %bubble;
-    }
-  }
-}
-
-$t: .3s;
-
-.social {
-  &:active,
-  &:focus {
-    
-    .social__bubble {
-      display: block;
-      animation: $t * 1.6 down forwards;
-      &:nth-child(3) {
-        animation-delay: $t * 1.3;
-      }
-      &:nth-child(2) {
-        animation-delay: $t / 1.5;
-      }
-    }
-  }
-  
-  .ion-social-twitter {
-    background-color: #1DA1F2;
-  }
-  
-  .ion-social-facebook {
-    background-color: #46629E;
-  }
-  
-  .ion-social-googleplus {
-    background-color: #DB4437;
-  }
-  
-  &__bubble {
-    @extend %bubble;
-    margin: 1rem 0 0;
-    display: none;
-    box-shadow: 0 2px 5px rgba(#000, .3);
-    opacity: 0;
-    will-change: animation;
-    color: $lightFont;
-
-    &:nth-child(1) {
-      top: -132px;
-    }
-    &:nth-child(2) {
-      top: -66px;
-    }
   }
 }
 
 .back-button {
-  margin: 2rem;
+  margin: 4vw;
   justify-self: end;
   align-self: flex-start;
-  font-size: 1.15rem;
+  font-size: 0.9rem;
+  
+  @media (min-width: $mobileWidth) {
+    font-size: 1.15rem;
+  }
 }
 
 .modal {
@@ -479,17 +488,5 @@ $t: .3s;
   }
   100% {
     left: 0;
-  }
-}
-
-@keyframes down {
-  0% {
-    opacity: 0;
-    transform: translateY(-130%);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-    top: 0;
   }
 }

@@ -8264,16 +8264,18 @@
 
 	var _InputComponent2 = _interopRequireDefault(_InputComponent);
 
+	var _ShareComponent = __webpack_require__(309);
+
+	var _ShareComponent2 = _interopRequireDefault(_ShareComponent);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	(0, _InputComponent2.default)();
-
 	(0, _FormComponent2.default)(document.getElementById('form'), _HaikuGenerator.generateHaiku);
-
+	(0, _InputComponent2.default)();
 	(0, _ResultComponent2.default)();
-	(0, _ModalComponent2.default)(document.getElementById('modal'), document.getElementById('main-container'));
 	(0, _FieldComponent2.default)();
 	(0, _ScreenComponent2.default)();
+	(0, _ShareComponent2.default)();
 
 /***/ },
 /* 299 */
@@ -8408,7 +8410,7 @@
 
 	  var totalWords = word.match(/\b\w+\b/g);
 	  if (!word.length || totalWords.length > 1) {
-	    _pubSub2.default.emit('validationError');
+	    _pubSub2.default.emit('validationErrored');
 	    return;
 	  }
 
@@ -8426,30 +8428,10 @@
 	    var haikuPattern = [5, 7, 5];
 	    haikuArray = [];
 
-	    var _iteratorNormalCompletion = true;
-	    var _didIteratorError = false;
-	    var _iteratorError = undefined;
-
-	    try {
-	      for (var _iterator = haikuPattern[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	        var syllables = _step.value;
-
-	        haikuArray = haikuArray.concat(getWords(allRelatedWords, syllables));
-	        haikuArray.push("<br/>");
-	      }
-	    } catch (err) {
-	      _didIteratorError = true;
-	      _iteratorError = err;
-	    } finally {
-	      try {
-	        if (!_iteratorNormalCompletion && _iterator.return) {
-	          _iterator.return();
-	        }
-	      } finally {
-	        if (_didIteratorError) {
-	          throw _iteratorError;
-	        }
-	      }
+	    for (var i = 0; i < haikuPattern.length; i++) {
+	      var syllables = haikuPattern[i];
+	      haikuArray = haikuArray.concat(getWords(allRelatedWords, syllables));
+	      if (i < haikuPattern.length - 1) haikuArray.push("<br/>");
 	    }
 
 	    var haiku = "",
@@ -8463,7 +8445,7 @@
 	      haiku = haikuArray.join(" ");
 	    }
 
-	    _pubSub2.default.emit('createdHaiku', { haikuTitle: haikuTitle, haiku: haiku });
+	    _pubSub2.default.emit('generatedHaiku', { haikuTitle: haikuTitle, haiku: haiku });
 	  });
 	}
 
@@ -8604,7 +8586,7 @@
 	    refreshBtn.classList.remove("active");
 	  });
 
-	  _pubSub2.default.subscribe('createdHaiku', function (data) {
+	  _pubSub2.default.subscribe('generatedHaiku', function (data) {
 	    var haikuTitle = data.haikuTitle,
 	        haiku = data.haiku;
 
@@ -8730,7 +8712,7 @@
 	    outputDiv.classList.remove("screen--active");
 	  });
 
-	  _pubSub2.default.subscribe('createdHaiku', function () {
+	  _pubSub2.default.subscribe('generatedHaiku', function () {
 	    landingDiv.classList.remove("screen--active");
 	    landingDiv.classList.remove("screen--initial");
 	    outputDiv.classList.add("screen--active");
@@ -8765,6 +8747,41 @@
 	    input.value = '';
 	    input.focus();
 	  });
+	}
+
+/***/ },
+/* 309 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = ShareComponent;
+
+	var _pubSub = __webpack_require__(299);
+
+	var _pubSub2 = _interopRequireDefault(_pubSub);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function ShareComponent() {
+	  var twitterBtn = document.getElementById('twitter-share');
+
+	  function addTwitterLink(_ref) {
+	    var haikuTitle = _ref.haikuTitle,
+	        haiku = _ref.haiku;
+
+	    var url = "https://881f48f30b344cb1aaf374c93db91906.codepen.website/";
+	    var regex = /\s<br\s*[\/]?>\s/gi;
+	    var encodedHaiku = haiku.replace(regex, "%0A");
+	    var shareUrl = 'https://twitter.com/intent/tweet?url=' + url + '&text=' + haikuTitle + '%0A' + encodedHaiku + '%0A-';
+
+	    twitterBtn.setAttribute('href', shareUrl);
+	  }
+
+	  _pubSub2.default.subscribe('generatedHaiku', addTwitterLink);
 	}
 
 /***/ }

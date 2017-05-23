@@ -15,7 +15,7 @@
     <nav class="nav">
       <div class="nav__container">
         <a href="/" class="nav__logo">haiku4u</a>
-        <button id="open-modal" class="nav__item">About</button>
+        <p class="nav__description">a random project by <a class="nav__link" href="https://twitter.com/ramenhog" target="_blank">@ramenhog</a></p>
       </div>
     </nav>
     <section class="section">
@@ -38,12 +38,8 @@
           <h2 id="haiku-title" class="haiku__title"></h2>
           <div class="haiku__content" id="haiku"></div>
           <div class="haiku__actions">
-            <button class="icon icon--spin ion-android-refresh" id="refresh"></button>
-            <button class="social icon ion-share">
-              <a class="social__bubble ion-social-twitter"></a>
-              <a class="social__bubble ion-social-facebook"></a>
-              <a class="social__bubble ion-social-googleplus"></a>
-            </button>
+            <button class="round-button round-button--spin ion-android-refresh" id="refresh"></button>
+            <a id="twitter-share" target="_blank" class="round-button ion-social-twitter" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter" ></a>
           </div>
         </div>
         <button class="back-button" id="back"><span class="icon ion-arrow-left-c"></span> Back</button>

@@ -24,7 +24,7 @@ export default function HaikuForm() {
     refreshBtn.classList.remove("active");
   });
   
-  pubSub.subscribe('createdHaiku', (data) => {
+  pubSub.subscribe('generatedHaiku', (data) => {
     const {haikuTitle, haiku} = data;
     haikuTitleElm.innerHTML = haikuTitle;
     haikuSpace.innerHTML = haiku;

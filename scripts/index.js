@@ -6,12 +6,11 @@ import Modal from './ModalComponent';
 import Field from './FieldComponent';
 import Screen from './ScreenComponent';
 import Input from './InputComponent';
-
-Input();
+import Share from './ShareComponent';
 
 Form(document.getElementById('form'), generateHaiku);
-
+Input();
 Result();
-Modal(document.getElementById('modal'), document.getElementById('main-container'));
 Field();
 Screen();
+Share();

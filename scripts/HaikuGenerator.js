@@ -83,7 +83,7 @@ export function generateHaiku() {
   
   const totalWords = word.match(/\b\w+\b/g);
   if (!word.length || totalWords.length > 1) {
-    pubSub.emit('validationError');
+    pubSub.emit('validationErrored');
     return;
   }
 	
@@ -101,11 +101,12 @@ export function generateHaiku() {
     const haikuPattern = [5, 7, 5];
     haikuArray = [];
 
-    for (let syllables of haikuPattern) {
+    for (let i = 0; i < haikuPattern.length; i++) {
+      const syllables = haikuPattern[i];
       haikuArray = haikuArray.concat(
         getWords(allRelatedWords, syllables)
       );
-      haikuArray.push("<br/>");
+      if (i<haikuPattern.length-1) haikuArray.push("<br/>");
     }
 
     let haiku = "", 
@@ -120,6 +121,6 @@ export function generateHaiku() {
       haiku = haikuArray.join(" ");
     }
     
-    pubSub.emit('createdHaiku', { haikuTitle, haiku});
+    pubSub.emit('generatedHaiku', { haikuTitle, haiku});
   });
 }

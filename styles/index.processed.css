@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Bitter:400,700|Open+Sans:300,400,600,700");
-.haiku__actions .icon,
-.social__bubble {
+.round-button {
   opacity: 0.5;
   margin-left: 1.5rem;
   width: 2.5rem;
@@ -14,15 +13,12 @@
   transition: opacity 0.2s ease-in-out;
 }
 
-.haiku__actions .icon:hover,
-.social__bubble:hover {
+.round-button:hover {
   opacity: 0.7;
 }
 
-.haiku__actions .icon:focus,
-.social__bubble:focus,
-.haiku__actions .icon:active,
-.social__bubble:active {
+.round-button:focus,
+.round-button:active {
   opacity: 1;
 }
 
@@ -99,6 +95,14 @@ body {
   font-family: "Bitter", Helvetica, serif;
   -webkit-font-smoothing: antialiased;
   color: #D7DEDC;
+  font-size: 15px;
+}
+
+@media (min-width: 500px) {
+  html,
+  body {
+    font-size: 17px;
+  }
 }
 
 .main-container {
@@ -127,12 +131,24 @@ body {
 
 h1 {
   margin: 0 0 0.2em;
-  font-size: 4rem;
+  font-size: 2.1rem;
   line-height: 1.2;
 }
 
+@media (min-width: 500px) {
+  h1 {
+    font-size: 4rem;
+  }
+}
+
 h2 {
-  font-size: 3rem;
+  font-size: 1.1rem;
+}
+
+@media (min-width: 500px) {
+  h2 {
+    font-size: 3rem;
+  }
 }
 
 h3 {
@@ -140,16 +156,26 @@ h3 {
   font-weight: 400;
 }
 
-.icon {
+.round-button {
   font-size: 1.3rem;
 }
 
+.round-button--spin.active {
+  animation: spin 0.4s cubic-bezier(0.72, -0.07, 0.59, 1.08);
+}
+
 .nav {
-  padding: 1.5rem 4vw;
+  padding: 1rem;
   border: 12px solid #8771e4;
   border-bottom: 0;
   background: #755CE0;
   color: #D7DEDC;
+}
+
+@media (min-width: 500px) {
+  .nav {
+    padding: 1.5rem 4vw;
+  }
 }
 
 .nav__item {
@@ -175,6 +201,26 @@ h3 {
   justify-content: space-between;
   -ms-flex-align: baseline;
   align-items: baseline;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+@media (min-width: 500px) {
+  .nav__container {
+    -ms-flex-direction: row;
+    flex-direction: row;
+  }
+}
+
+.nav__description {
+  margin: 0.5em 0;
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.nav__link {
+  border-bottom: 1px solid currentColor;
+  font-family: inherit;
 }
 
 .landing__heading {
@@ -268,7 +314,16 @@ h3 {
 }
 
 .form {
-  margin-bottom: 15rem;
+  margin-bottom: 12vh;
+  width: 90%;
+  max-width: 600px;
+}
+
+@media (min-width: 500px) {
+  .form {
+    width: 40vw;
+    min-width: 460px;
+  }
 }
 
 .field {
@@ -281,8 +336,6 @@ h3 {
   -ms-flex-align: center;
   align-items: center;
   border: none;
-  width: 40vw;
-  max-width: 600px;
   height: var(--fieldHeight);
   background-color: rgba(255, 255, 255, 0.5);
   overflow: hidden;
@@ -306,9 +359,15 @@ h3 {
   background: none;
   padding: 0 1em;
   line-height: var(--fieldHeight);
-  font-size: 1.15rem;
+  font-size: 0.8rem;
   color: #5643af;
   font-family: "Open Sans", Helvetica, serif;
+}
+
+@media (min-width: 500px) {
+  .field__input {
+    font-size: 1.15rem;
+  }
 }
 
 .field__input::-webkit-input-placeholder {
@@ -337,7 +396,13 @@ h3 {
   padding: 0 1em;
   line-height: var(--fieldHeight);
   color: #755CE0;
-  font-size: 2rem;
+  font-size: 1.3rem;
+}
+
+@media (min-width: 500px) {
+  .field__submit {
+    font-size: 2rem;
+  }
 }
 
 .field__submit:focus span,
@@ -354,10 +419,16 @@ h3 {
 .haiku__title {
   margin: 0 0 0.5em 0;
   line-height: 1.1;
+  font-size: 1.5rem;
+}
+
+@media (min-width: 500px) {
+  .haiku__title {
+    font-size: 3rem;
+  }
 }
 
 .haiku__container {
-  min-width: 360px;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: column;
@@ -366,8 +437,15 @@ h3 {
   justify-content: center;
   -ms-flex: 1;
   flex: 1;
-  font-size: 1.4rem;
+  font-size: 1rem;
   line-height: 1.7;
+}
+
+@media (min-width: 500px) {
+  .haiku__container {
+    min-width: 360px;
+    font-size: 1.4rem;
+  }
 }
 
 .haiku__actions {
@@ -378,61 +456,18 @@ h3 {
   padding-top: 2rem;
 }
 
-.haiku__actions .icon--spin.active {
-  animation: spin 0.4s cubic-bezier(0.72, -0.07, 0.59, 1.08);
-}
-
-.social:active .social__bubble,
-.social:focus .social__bubble {
-  display: block;
-  animation: 0.48s down forwards;
-}
-
-.social:active .social__bubble:nth-child(3),
-.social:focus .social__bubble:nth-child(3) {
-  animation-delay: 0.39s;
-}
-
-.social:active .social__bubble:nth-child(2),
-.social:focus .social__bubble:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.social .ion-social-twitter {
-  background-color: #1DA1F2;
-}
-
-.social .ion-social-facebook {
-  background-color: #46629E;
-}
-
-.social .ion-social-googleplus {
-  background-color: #DB4437;
-}
-
-.social__bubble {
-  margin: 1rem 0 0;
-  display: none;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  opacity: 0;
-  will-change: animation;
-  color: #D7DEDC;
-}
-
-.social__bubble:nth-child(1) {
-  top: -132px;
-}
-
-.social__bubble:nth-child(2) {
-  top: -66px;
-}
-
 .back-button {
-  margin: 2rem;
+  margin: 4vw;
   justify-self: end;
   -ms-flex-item-align: start;
   align-self: flex-start;
-  font-size: 1.15rem;
+  font-size: 0.9rem;
+}
+
+@media (min-width: 500px) {
+  .back-button {
+    font-size: 1.15rem;
+  }
 }
 
 .modal {
@@ -500,17 +535,5 @@ h3 {
   }
   100% {
     left: 0;
-  }
-}
-
-@keyframes down {
-  0% {
-    opacity: 0;
-    transform: translateY(-130%);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-    top: 0;
   }
 }

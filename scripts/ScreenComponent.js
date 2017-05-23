@@ -10,7 +10,7 @@ export default function ScreenComponent() {
     outputDiv.classList.remove("screen--active");
   });
   
-  pubSub.subscribe('createdHaiku', () => {
+  pubSub.subscribe('generatedHaiku', () => {
     landingDiv.classList.remove("screen--active");
     landingDiv.classList.remove("screen--initial");
     outputDiv.classList.add("screen--active");
