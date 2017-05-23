@@ -8773,7 +8773,7 @@
 	    var haikuTitle = _ref.haikuTitle,
 	        haiku = _ref.haiku;
 
-	    var url = "https://881f48f30b344cb1aaf374c93db91906.codepen.website/";
+	    var url = "http://ramenhog.com/haiku4u";
 	    var regex = /\s<br\s*[\/]?>\s/gi;
 	    var encodedHaiku = haiku.replace(regex, "%0A");
 	    var shareUrl = 'https://twitter.com/intent/tweet?url=' + url + '&text=' + haikuTitle + '%0A' + encodedHaiku + '%0A-';
